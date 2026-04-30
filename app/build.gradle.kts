@@ -18,15 +18,17 @@ android {
         applicationId = "com.bttame"
         minSdk = 31
         targetSdk = 34
-        versionCode = 2
-        versionName = "0.2.0"
+        versionCode = 4
+        versionName = "0.3.1"
     }
 
+    val releaseStoreFilePath = localProps.getProperty("bttameStoreFile")
+    val hasReleaseSigning = !releaseStoreFilePath.isNullOrBlank()
+
     signingConfigs {
-        create("release") {
-            val storeFilePath = localProps.getProperty("bttameStoreFile")
-            if (!storeFilePath.isNullOrBlank()) {
-                storeFile = file(storeFilePath)
+        if (hasReleaseSigning) {
+            create("release") {
+                storeFile = file(releaseStoreFilePath!!)
                 storePassword = localProps.getProperty("bttameStorePassword")
                 keyAlias = localProps.getProperty("bttameKeyAlias")
                 keyPassword = localProps.getProperty("bttameKeyPassword")
@@ -37,7 +39,9 @@ android {
     buildTypes {
         release {
             isMinifyEnabled = false
-            signingConfig = signingConfigs.getByName("release")
+            if (hasReleaseSigning) {
+                signingConfig = signingConfigs.getByName("release")
+            }
         }
     }
 
