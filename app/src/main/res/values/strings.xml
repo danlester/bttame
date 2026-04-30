@@ -1,10 +1,13 @@
 <resources>
-    <string name="app_name">bttame</string>
-    <string name="no_device">No device selected</string>
-    <string name="tap_change">Tap "Change device" to pick a paired device</string>
+    <string name="app_name">BT Tame</string>
+    <string name="no_devices">No devices yet — tap "Add device" to pick one from your paired list.</string>
+    <string name="not_selected">No device selected</string>
     <string name="pair_connect">Pair &amp; Connect</string>
-    <string name="forget">Forget</string>
-    <string name="change_device">Change device</string>
+    <string name="forget">Forget (system bond)</string>
+    <string name="remove_from_list">Remove from list</string>
+    <string name="remove_confirm_title">Remove %1$s?</string>
+    <string name="remove_confirm_msg">Drops it from this app\'s list. Your system Bluetooth pairing is not changed.</string>
+    <string name="add_device">Add device</string>
     <string name="pick_device">Pick a paired device</string>
     <string name="no_bonded">No paired devices yet — pair once via system settings, then come back</string>
     <string name="no_bt">No Bluetooth on this device</string>
