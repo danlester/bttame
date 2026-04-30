@@ -11,8 +11,6 @@ import android.content.pm.PackageManager
 import android.os.Build
 import android.os.Bundle
 import android.view.View
-import android.widget.ArrayAdapter
-import android.widget.ListView
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
@@ -25,6 +23,7 @@ class MainActivity : AppCompatActivity() {
     private val adapter by lazy { getSystemService(BluetoothManager::class.java)?.adapter }
 
     private var devices: List<TameDevice> = emptyList()
+    private var listAdapter: DeviceListAdapter? = null
 
     private val requestPerm = registerForActivityResult(
         ActivityResultContracts.RequestPermission()
@@ -61,6 +60,8 @@ class MainActivity : AppCompatActivity() {
 
         binding.list.setOnItemClickListener { _, _, pos, _ ->
             store.setActive(devices[pos].mac)
+            listAdapter?.activeMac = store.activeMac()
+            listAdapter?.notifyDataSetChanged()
             refreshStatus()
         }
         binding.connectBtn.setOnClickListener { onConnectClicked() }
@@ -109,16 +110,13 @@ class MainActivity : AppCompatActivity() {
         if (devices.isEmpty()) {
             binding.emptyLabel.visibility = View.VISIBLE
             binding.list.visibility = View.GONE
+            listAdapter = null
         } else {
             binding.emptyLabel.visibility = View.GONE
             binding.list.visibility = View.VISIBLE
-            val labels = devices.map { "${it.name}\n${it.mac}" }
-            binding.list.adapter = ArrayAdapter(
-                this, android.R.layout.simple_list_item_single_choice, labels
-            )
-            binding.list.choiceMode = ListView.CHOICE_MODE_SINGLE
-            val activeIdx = devices.indexOfFirst { it.mac == store.activeMac() }
-            if (activeIdx >= 0) binding.list.setItemChecked(activeIdx, true)
+            listAdapter = DeviceListAdapter(this, devices, adapter, ::hasBtPerm, showRadio = true)
+                .apply { activeMac = store.activeMac() }
+            binding.list.adapter = listAdapter
         }
         refreshStatus()
     }
@@ -156,7 +154,8 @@ class MainActivity : AppCompatActivity() {
             BluetoothDevice.BOND_BONDING -> getString(R.string.bonding)
             else -> getString(R.string.not_bonded)
         }
-        binding.status.text = "${active.name}: $state"
+        val display = DeviceIcons.displayName(a, active.mac, true, active.name)
+        binding.status.text = "$display: $state"
         binding.connectBtn.isEnabled = true
         binding.forgetBtn.isEnabled = device.bondState == BluetoothDevice.BOND_BONDED
     }
