@@ -1,0 +1,21 @@
+<resources>
+    <string name="app_name">bttame</string>
+    <string name="no_device">No device selected</string>
+    <string name="tap_change">Tap "Change device" to pick a paired device</string>
+    <string name="pair_connect">Pair &amp; Connect</string>
+    <string name="forget">Forget</string>
+    <string name="change_device">Change device</string>
+    <string name="pick_device">Pick a paired device</string>
+    <string name="no_bonded">No paired devices yet — pair once via system settings, then come back</string>
+    <string name="no_bt">No Bluetooth on this device</string>
+    <string name="bt_off">Bluetooth is off</string>
+    <string name="perm_needed">Bluetooth permission required</string>
+    <string name="perm_denied">Bluetooth permission denied</string>
+    <string name="bonded">Bonded</string>
+    <string name="bonding">Bonding…</string>
+    <string name="not_bonded">Not bonded</string>
+    <string name="already_paired">Already paired — system will connect</string>
+    <string name="pairing_started">Pairing… put headphones in pairing mode</string>
+    <string name="pairing_rejected">createBond() rejected</string>
+    <string name="forgetting">Forgetting…</string>
+</resources>
