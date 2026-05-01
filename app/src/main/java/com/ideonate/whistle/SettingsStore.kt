@@ -1,9 +1,9 @@
-package com.bttame
+package com.ideonate.whistle
 
 import android.content.Context
 
 class SettingsStore(ctx: Context) {
-    private val prefs = ctx.getSharedPreferences("bttame_settings", Context.MODE_PRIVATE)
+    private val prefs = ctx.getSharedPreferences("whistle_settings", Context.MODE_PRIVATE)
 
     fun forgetHour(): Int = prefs.getInt(KEY_HOUR, 3)
     fun forgetMinute(): Int = prefs.getInt(KEY_MINUTE, 0)

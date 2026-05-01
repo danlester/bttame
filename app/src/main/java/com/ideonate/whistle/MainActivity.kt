@@ -1,4 +1,4 @@
-package com.bttame
+package com.ideonate.whistle
 
 import android.Manifest
 import android.bluetooth.BluetoothDevice
@@ -14,7 +14,7 @@ import android.view.View
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
-import com.bttame.databinding.ActivityMainBinding
+import com.ideonate.whistle.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
 

@@ -1,4 +1,4 @@
-package com.bttame
+package com.ideonate.whistle
 
 import android.content.Context
 import org.json.JSONArray
@@ -11,9 +11,7 @@ data class TameDevice(
 )
 
 class DeviceStore(ctx: Context) {
-    private val prefs = ctx.getSharedPreferences("bttame", Context.MODE_PRIVATE)
-
-    init { migrateLegacyIfNeeded() }
+    private val prefs = ctx.getSharedPreferences("whistle", Context.MODE_PRIVATE)
 
     fun list(): List<TameDevice> {
         val s = prefs.getString(KEY_DEVICES, "[]") ?: "[]"
@@ -75,14 +73,6 @@ class DeviceStore(ctx: Context) {
             )
         }
         prefs.edit().putString(KEY_DEVICES, arr.toString()).apply()
-    }
-
-    private fun migrateLegacyIfNeeded() {
-        if (prefs.contains(KEY_DEVICES)) return
-        val legacyMac = prefs.getString("mac", null) ?: return
-        val legacyName = prefs.getString("name", legacyMac) ?: legacyMac
-        save(listOf(TameDevice(legacyMac, legacyName)))
-        prefs.edit().putString(KEY_ACTIVE, legacyMac).remove("mac").remove("name").apply()
     }
 
     companion object {

@@ -1,9 +1,9 @@
-package com.bttame
+package com.ideonate.whistle
 
 import android.app.TimePickerDialog
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import com.bttame.databinding.ActivitySettingsBinding
+import com.ideonate.whistle.databinding.ActivitySettingsBinding
 import java.util.Locale
 
 class SettingsActivity : AppCompatActivity() {

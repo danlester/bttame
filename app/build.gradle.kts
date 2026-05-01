@@ -11,27 +11,27 @@ val localProps = Properties().apply {
 }
 
 android {
-    namespace = "com.bttame"
+    namespace = "com.ideonate.whistle"
     compileSdk = 34
 
     defaultConfig {
-        applicationId = "com.bttame"
+        applicationId = "com.ideonate.whistle"
         minSdk = 31
         targetSdk = 34
         versionCode = 4
         versionName = "0.3.1"
     }
 
-    val releaseStoreFilePath = localProps.getProperty("bttameStoreFile")
+    val releaseStoreFilePath = localProps.getProperty("whistleStoreFile")
     val hasReleaseSigning = !releaseStoreFilePath.isNullOrBlank()
 
     signingConfigs {
         if (hasReleaseSigning) {
             create("release") {
                 storeFile = file(releaseStoreFilePath!!)
-                storePassword = localProps.getProperty("bttameStorePassword")
-                keyAlias = localProps.getProperty("bttameKeyAlias")
-                keyPassword = localProps.getProperty("bttameKeyPassword")
+                storePassword = localProps.getProperty("whistleStorePassword")
+                keyAlias = localProps.getProperty("whistleKeyAlias")
+                keyPassword = localProps.getProperty("whistleKeyPassword")
             }
         }
     }

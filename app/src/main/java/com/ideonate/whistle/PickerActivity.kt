@@ -1,4 +1,4 @@
-package com.bttame
+package com.ideonate.whistle
 
 import android.Manifest
 import android.annotation.SuppressLint
@@ -9,7 +9,7 @@ import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
-import com.bttame.databinding.ActivityPickerBinding
+import com.ideonate.whistle.databinding.ActivityPickerBinding
 
 class PickerActivity : AppCompatActivity() {
 

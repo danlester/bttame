@@ -1,4 +1,4 @@
-package com.bttame
+package com.ideonate.whistle
 
 import android.Manifest
 import android.annotation.SuppressLint
@@ -43,6 +43,6 @@ class AutoForgetReceiver : BroadcastReceiver() {
     }.getOrElse { false }
 
     companion object {
-        const val ACTION_FORGET = "com.bttame.AUTO_FORGET"
+        const val ACTION_FORGET = "com.ideonate.whistle.AUTO_FORGET"
     }
 }

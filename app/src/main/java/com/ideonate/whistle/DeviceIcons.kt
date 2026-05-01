@@ -1,4 +1,4 @@
-package com.bttame
+package com.ideonate.whistle
 
 import android.annotation.SuppressLint
 import android.bluetooth.BluetoothAdapter
