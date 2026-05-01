@@ -4,7 +4,11 @@ import android.content.Context
 import org.json.JSONArray
 import org.json.JSONObject
 
-data class TameDevice(val mac: String, val name: String)
+data class TameDevice(
+    val mac: String,
+    val name: String,
+    val autoForget: Boolean = false
+)
 
 class DeviceStore(ctx: Context) {
     private val prefs = ctx.getSharedPreferences("bttame", Context.MODE_PRIVATE)
@@ -16,14 +20,22 @@ class DeviceStore(ctx: Context) {
         val arr = JSONArray(s)
         return List(arr.length()) { i ->
             val o = arr.getJSONObject(i)
-            TameDevice(o.getString("mac"), o.optString("name", o.getString("mac")))
+            TameDevice(
+                mac = o.getString("mac"),
+                name = o.optString("name", o.getString("mac")),
+                autoForget = o.optBoolean("autoForget", false)
+            )
         }
     }
 
     fun add(d: TameDevice) {
         val current = list().toMutableList()
         val idx = current.indexOfFirst { it.mac.equals(d.mac, ignoreCase = true) }
-        if (idx >= 0) current[idx] = d else current.add(d)
+        if (idx >= 0) {
+            current[idx] = d.copy(autoForget = current[idx].autoForget)
+        } else {
+            current.add(d)
+        }
         save(current)
         if (activeMac() == null) setActive(d.mac)
     }
@@ -35,6 +47,15 @@ class DeviceStore(ctx: Context) {
         }
     }
 
+    fun setAutoForget(mac: String, enabled: Boolean) {
+        val updated = list().map {
+            if (it.mac.equals(mac, ignoreCase = true)) it.copy(autoForget = enabled) else it
+        }
+        save(updated)
+    }
+
+    fun anyAutoForget(): Boolean = list().any { it.autoForget }
+
     fun activeMac(): String? = prefs.getString(KEY_ACTIVE, null)
 
     fun setActive(mac: String?) {
@@ -45,7 +66,14 @@ class DeviceStore(ctx: Context) {
 
     private fun save(list: List<TameDevice>) {
         val arr = JSONArray()
-        list.forEach { arr.put(JSONObject().put("mac", it.mac).put("name", it.name)) }
+        list.forEach {
+            arr.put(
+                JSONObject()
+                    .put("mac", it.mac)
+                    .put("name", it.name)
+                    .put("autoForget", it.autoForget)
+            )
+        }
         prefs.edit().putString(KEY_DEVICES, arr.toString()).apply()
     }
 

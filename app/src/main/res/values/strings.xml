@@ -20,5 +20,24 @@
     <string name="already_paired">Already paired — system will connect</string>
     <string name="pairing_started">Pairing… put headphones in pairing mode</string>
     <string name="pairing_rejected">createBond() rejected</string>
+    <string name="pairing_title">Pairing</string>
+    <string name="pairing_connecting">Connecting to %1$s…</string>
+    <string name="pairing_turn_on">Turn on %1$s.</string>
+    <string name="pairing_pairing_mode">Put %1$s in pairing mode.</string>
+    <string name="pairing_paired">Connected.</string>
+    <string name="pairing_bt_off">Turn on Bluetooth.</string>
     <string name="forgetting">Forgetting…</string>
+    <string name="auto_forget_label">Auto-forget overnight when disconnected</string>
+    <string name="settings_title">Settings</string>
+    <string name="settings_blurb">A daily best-effort job that calls Forget on any device that has Auto-forget enabled, but only if it isn\'t currently connected. Misses are fine — it\'ll catch up the next day.</string>
+    <string name="forget_time_label">Daily forget time</string>
+    <string name="change_time">Change time</string>
+    <string name="manual_label">Test</string>
+    <string name="manual_blurb">Run the forget job right now.</string>
+    <string name="run_now">Run forget job now</string>
+    <string name="run_status_none">No devices have auto-forget enabled.</string>
+    <string name="run_status_fired">Triggered. Will forget %1$d device(s) if disconnected.</string>
+    <string name="advanced_label">Advanced</string>
+    <string name="cancel_bond_label">Cancel any pending bond before pairing</string>
+    <string name="cancel_bond_blurb">Calls cancelBondProcess() before createBond(). Try this if Pair &amp; Connect intermittently fails with an "incorrect PIN" error.</string>
 </resources>

@@ -70,6 +70,15 @@ class MainActivity : AppCompatActivity() {
         binding.addBtn.setOnClickListener {
             pickDevice.launch(Intent(this, PickerActivity::class.java))
         }
+        binding.settingsBtn.setOnClickListener {
+            startActivity(Intent(this, SettingsActivity::class.java))
+        }
+        binding.autoForgetCheck.setOnClickListener {
+            val active = activeDevice() ?: return@setOnClickListener
+            store.setAutoForget(active.mac, binding.autoForgetCheck.isChecked)
+            devices = store.list()
+            AutoForgetScheduler.reschedule(this)
+        }
 
         ensurePermission()
     }
@@ -132,9 +141,13 @@ class MainActivity : AppCompatActivity() {
             binding.connectBtn.isEnabled = false
             binding.forgetBtn.isEnabled = false
             binding.removeBtn.isEnabled = false
+            binding.autoForgetCheck.isEnabled = false
+            binding.autoForgetCheck.isChecked = false
             return
         }
         binding.removeBtn.isEnabled = true
+        binding.autoForgetCheck.isEnabled = true
+        binding.autoForgetCheck.isChecked = active.autoForget
         if (!hasBtPerm()) {
             binding.status.text = getString(R.string.perm_needed)
             binding.connectBtn.isEnabled = false
@@ -165,22 +178,21 @@ class MainActivity : AppCompatActivity() {
         val active = activeDevice() ?: return
         val a = adapter ?: run { binding.status.text = getString(R.string.no_bt); return }
         if (!a.isEnabled) { binding.status.text = getString(R.string.bt_off); return }
-        try {
-            val device = a.getRemoteDevice(active.mac)
-            if (device.bondState == BluetoothDevice.BOND_BONDED) {
-                binding.status.text = getString(R.string.already_paired)
-            } else {
-                val ok = createBondBredr(device)
-                binding.status.text =
-                    if (ok) getString(R.string.pairing_started)
-                    else getString(R.string.pairing_rejected)
-            }
+        val device = try {
+            a.getRemoteDevice(active.mac)
         } catch (t: Throwable) {
-            binding.status.text = "Error: ${t.message}"
+            binding.status.text = "Error: ${t.message}"; return
         }
+        val name = DeviceIcons.displayName(a, active.mac, true, active.name)
+        PairingDialog(this, a, device, name, ::createBondBredr).show()
     }
 
     private fun createBondBredr(device: BluetoothDevice): Boolean {
+        if (SettingsStore(this).cancelBondFirst()) {
+            runCatching {
+                device.javaClass.getMethod("cancelBondProcess").invoke(device)
+            }
+        }
         runCatching {
             val m = device.javaClass.getMethod("createBond", Int::class.javaPrimitiveType)
             return m.invoke(device, 1 /* TRANSPORT_BREDR */) as Boolean

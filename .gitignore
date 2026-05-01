@@ -11,3 +11,4 @@ local.properties
 *.jks
 *.apk
 *.aab
+.claude/settings.local.json
