@@ -104,7 +104,7 @@ class PairingDialog(
                 if (!dismissed && mode == Mode.CONNECTING) {
                     showPrompt(activity.getString(R.string.pairing_turn_on, displayName))
                 }
-            }, INITIAL_WAIT_MS)
+            }, SettingsStore(activity).initialWaitSeconds() * 1000L)
             return
         }
         attemptBond()
@@ -244,6 +244,5 @@ class PairingDialog(
         private const val REASON_REMOTE_AUTH_CANCELED = 8
         private const val REASON_REPEATED_ATTEMPTS = 7
         private const val RETRY_DELAY_MS = 2500L
-        private const val INITIAL_WAIT_MS = 8000L  // already-bonded ACL grace period
     }
 }

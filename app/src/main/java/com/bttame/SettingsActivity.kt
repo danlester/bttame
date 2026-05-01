@@ -37,6 +37,15 @@ class SettingsActivity : AppCompatActivity() {
             settings.setCancelBondFirst(binding.cancelBondCheck.isChecked)
         }
 
+        val initialWait = settings.initialWaitSeconds()
+        binding.initialWaitSlider.value = initialWait.toFloat()
+        binding.initialWaitValue.text = getString(R.string.initial_wait_value, initialWait)
+        binding.initialWaitSlider.addOnChangeListener { _, value, _ ->
+            val s = value.toInt()
+            settings.setInitialWaitSeconds(s)
+            binding.initialWaitValue.text = getString(R.string.initial_wait_value, s)
+        }
+
         binding.runNowBtn.setOnClickListener {
             val toForget = DeviceStore(this).list().count { it.autoForget }
             AutoForgetScheduler.runNow(this)

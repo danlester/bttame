@@ -17,9 +17,15 @@ class SettingsStore(ctx: Context) {
         prefs.edit().putBoolean(KEY_CANCEL_BOND, enabled).apply()
     }
 
+    fun initialWaitSeconds(): Int = prefs.getInt(KEY_INITIAL_WAIT, 3)
+    fun setInitialWaitSeconds(seconds: Int) {
+        prefs.edit().putInt(KEY_INITIAL_WAIT, seconds).apply()
+    }
+
     companion object {
         private const val KEY_HOUR = "forgetHour"
         private const val KEY_MINUTE = "forgetMinute"
         private const val KEY_CANCEL_BOND = "cancelBondFirst"
+        private const val KEY_INITIAL_WAIT = "initialWaitSeconds"
     }
 }

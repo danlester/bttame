@@ -3,7 +3,7 @@
     <string name="no_devices">No devices yet — tap "Add device" to pick one from your paired list.</string>
     <string name="not_selected">No device selected</string>
     <string name="pair_connect">Pair &amp; Connect</string>
-    <string name="forget">Forget (system bond)</string>
+    <string name="forget">Forget</string>
     <string name="remove_from_list">Remove from list</string>
     <string name="remove_confirm_title">Remove %1$s?</string>
     <string name="remove_confirm_msg">Drops it from this app\'s list. Your system Bluetooth pairing is not changed.</string>
@@ -40,4 +40,7 @@
     <string name="advanced_label">Advanced</string>
     <string name="cancel_bond_label">Cancel any pending bond before pairing</string>
     <string name="cancel_bond_blurb">Calls cancelBondProcess() before createBond(). Try this if Pair &amp; Connect intermittently fails with an "incorrect PIN" error.</string>
+    <string name="initial_wait_label">Wait before "turn it on" prompt</string>
+    <string name="initial_wait_value">%1$d s</string>
+    <string name="initial_wait_blurb">When the device is already paired, how long to wait for it to auto-connect before showing the prompt to turn it on. Lower = faster reaction when device is off; too low may flash the prompt before a slow connect completes.</string>
 </resources>
